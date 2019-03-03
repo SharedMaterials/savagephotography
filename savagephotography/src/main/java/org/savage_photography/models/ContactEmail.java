@@ -1,36 +1,11 @@
 package org.savage_photography.models;
 
-import org.savage_photography.repository.TemplateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 
-public class ContactEmail implements Email {
+public class ContactEmail extends SimpleMailMessage {
 
-    @Autowired
-    private TemplateRepository repository;
-
-    private String name;
-    private String email;
-    private String phoneNumber;
-    private String info;
-
-    public ContactEmail(String name, String email, String phoneNumber, String info) {
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.info = info;
-    }
-
-    public String getMessage(){
-        return String.format(
-                repository.getTemplate("contact"),
-                name,
-                email,
-                phoneNumber,
-                info
-        );
-    }
-
-    public String getEmail(){
-        return email;
-    }
+    public ContactEmail(String to, String subject, String message) {
+        this.setTo(to);
+        this.setSubject(subject);
+        this.setText(message);    }
 }
